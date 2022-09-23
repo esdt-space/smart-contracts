@@ -26,7 +26,7 @@ erdpy --verbose contract deploy --recall-nonce --pem="wallet.pem" --gas-limit=30
 > Make sure to replace the pem file location with your own. In case that you are deploying to an environment different than testnet, you would need to change the --proxy and the --chain parameters as well.
 
 ### Deploying the smart contract through erdpy.json
-```
+```json
 {
     "configurations": {
         "default": {
@@ -61,7 +61,7 @@ erdpy --verbose contract upgrade erd1qqqqqqqqqqqqqpgqdujpgae2kszektz63rxtdd0tkvp
 ```
 
 > **Note**
->Make sure to replace the contract address and the pem file location with your own. In case that you are deploying to an environment different than testnet, you would need to change the --proxy and the --chain parameters as well.
+> Make sure to replace the contract address and the pem file location with your own. In case that you are deploying to an environment different than testnet, you would need to change the --proxy and the --chain parameters as well.
 
 # Endpoints
 
