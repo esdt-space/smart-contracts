@@ -1,0 +1,197 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "f0c4da49983aa699f715caf681e3154b445fb60b",
+            "commitDate": "2022-03-01",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (f0c4da499 2022-03-01)"
+        },
+        "contractCrate": {
+            "name": "donations",
+            "version": "0.0.1"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.33.0"
+        }
+    },
+    "name": "Donations",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to enable a token\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the token is not already enabled\\n     * \\n     * Actions\\n     * [x] It should add the token to allowed_token_ids storage\\n     "
+            ],
+            "name": "enableToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to disable a token\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the token is enabled\\n     * \\n     * Actions\\n     * [x] It should remove the token from allowed_token_ids storage\\n     "
+            ],
+            "name": "disableToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to whitelist an address for withdrawing the tokens\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the address is not already on the whitelist\\n     * \\n     * Actions\\n     * [x] It should add the address to allowed_withdraw_addresses storage\\n     "
+            ],
+            "name": "whitelistWithdrawAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to remove a withdraw address from the whitelist\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the address is on the whitelist\\n     * \\n     * Actions\\n     * [x] It should remove the address from allowed_withdraw_addresses storage\\n     "
+            ],
+            "name": "removeWithdrawAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows anyone to donate with EGLD\\n     "
+            ],
+            "name": "donateEgld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows anyone to donate with ESDT\\n     "
+            ],
+            "name": "donateEsdt",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the whitelisted addresses to claim the tokens donated\\n     * \\n     * Validation\\n     * [x] It should check that the address is whitelisted to claim the tokens\\n     * \\n     * Actions\\n     * [x] It should send the entire SC balance for donated tokens to the caller\\n     "
+            ],
+            "name": "claimTokens",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It returns the total amount of tokens raised\\n     "
+            ],
+            "name": "getTotalDonations",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * It returns the total amount of tokens donated by an address\\n     "
+            ],
+            "name": "getUserDonations",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the donor addresses\\n    *"
+            ],
+            "name": "getDonors",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the current allowed token identifiers\\n    *"
+            ],
+            "name": "getAllowedTokenIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the token identifiers that have been used for donations \\n     * We are iterating over this when the user is claiming because some tokens might have been disabled and no longer in allowed_token_ids mapper\\n    *"
+            ],
+            "name": "getDonationTokenIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": false,
+    "types": {}
+}

@@ -1,0 +1,14 @@
+[package]
+name = "donations-meta"
+version = "0.0.1"
+authors = [ "alex@devaccent.com",]
+edition = "2021"
+publish = false
+
+[dev-dependencies]
+
+[dependencies.donations]
+path = ".."
+
+[dependencies.elrond-wasm-debug]
+version = "0.33.0"
