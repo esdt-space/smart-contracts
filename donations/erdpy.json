@@ -1,0 +1,19 @@
+{
+    "configurations": {
+        "default": {
+            "proxy": "https://testnet-gateway.elrond.com",
+            "chainID": "T"
+        }
+    },
+    "contract":{
+        "deploy":{
+            "verbose": true,
+            "bytecode": "output/donations.wasm",
+            "recall-nonce": true,
+            "pem": "../path/to/wallet.pem",
+            "gas-limit": 30000000,
+            "send": true,
+            "outfile": "donations.json"
+        }
+     }
+}
