@@ -1,0 +1,48 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "f0c4da49983aa699f715caf681e3154b445fb60b",
+            "commitDate": "2022-03-01",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (f0c4da499 2022-03-01)"
+        },
+        "contractCrate": {
+            "name": "payment-proxy",
+            "version": "0.0.1",
+            "git_version": "89f8cea"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.33.1"
+        }
+    },
+    "name": "PaymentProxy",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "payWithEgld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "payWithEsdt",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
+        }
+    ],
+    "events": [],
+    "hasCallback": false,
+    "types": {}
+}
