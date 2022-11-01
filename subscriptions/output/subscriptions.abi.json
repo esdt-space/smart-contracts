@@ -1,0 +1,426 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.61.0-nightly",
+            "commitHash": "f0c4da49983aa699f715caf681e3154b445fb60b",
+            "commitDate": "2022-03-01",
+            "channel": "Nightly",
+            "short": "rustc 1.61.0-nightly (f0c4da499 2022-03-01)"
+        },
+        "contractCrate": {
+            "name": "subscriptions",
+            "version": "0.0.1",
+            "git_version": "f936713-modified"
+        },
+        "framework": {
+            "name": "elrond-wasm",
+            "version": "0.33.0"
+        }
+    },
+    "name": "Subscriptions",
+    "constructor": {
+        "inputs": [],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to set the enabled status [true/false]\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * \\n     * Actions\\n     * [x] It should set the status to storage\\n     "
+            ],
+            "name": "setStatus",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "status",
+                    "type": "bool"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to set the address where the payments should be sent to\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * \\n     * Actions\\n     * [x] It should set the address to storage\\n     "
+            ],
+            "name": "setPaymentAddress",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to add a subscription plan\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan does not exist\\n     * \\n     * Actions\\n     * [x] It should add the subscription plan to storage\\n     "
+            ],
+            "name": "addSubscriptionPlan",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "validity",
+                    "type": "u64"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to remove a subscription plan\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan exists\\n     * \\n     * Actions\\n     * [x] It should remove the subscription plan ID from storage\\n     * [x] It should remove the subscription plan from storage\\n     * [x] It should remove the subscription plan token prices from storage\\n     "
+            ],
+            "name": "removeSubscriptionPlan",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to enable a subscription plan\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan exists\\n     * \\n     * Actions\\n     * [x] It should update the plan status to Enabled\\n     "
+            ],
+            "name": "enableSubscriptionPlan",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to disable a subscription plan\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan exists\\n     * \\n     * Actions\\n     * [x] It should update the plan status to Disabled\\n     "
+            ],
+            "name": "disableSubscriptionPlan",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner to set the subscription payment amount for a token\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan exists\\n     * \\n     * Actions\\n     * [x] It should add the token to `plan_tokens` storage if it does not exist\\n     * [x] It should set the price on `plan_prices` storage\\n     "
+            ],
+            "name": "setSubscriptionPlanPrice",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                },
+                {
+                    "name": "price",
+                    "type": "BigUint"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows the smart contract owner remove a token from plan payments\\n     * \\n     * Validation\\n     * [x] It should check that the caller is the SC owner\\n     * [x] It should check that the subscription plan exists\\n     * [x] It should check that the there token is enabled for this subscription plan\\n     * \\n     * Actions\\n     * [x] It should remove the token from `plan_tokens` storage\\n     * [x] It should remove the token prices from `plan_prices` storage\\n     "
+            ],
+            "name": "removeSubscriptionPlanToken",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "token_identifier",
+                    "type": "EgldOrEsdtTokenIdentifier"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows anyone to pay with EGLD\\n     "
+            ],
+            "name": "payWithEgld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It allows anyone to pay with ESDT\\n     "
+            ],
+            "name": "payWithEsdt",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "docs": [
+                "\\n     * It returns the subscription plans available\\n     "
+            ],
+            "name": "getSubscriptionPlans",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Plan>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * It returns the prices for a specific subscription plan\\n     "
+            ],
+            "name": "getSubscriptionPlanPrices",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<tuple<EgldOrEsdtTokenIdentifier,BigUint>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * It returns the active user plans\\n     "
+            ],
+            "name": "getUserPlans",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<UserPlan>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the contract status [true/false]\\n    *"
+            ],
+            "name": "isEnabled",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the subscription plan ids\\n    *"
+            ],
+            "name": "getPlanIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the subscription plan info\\n    *"
+            ],
+            "name": "getPlanInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Plan"
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores all the users that activated a plan\\n    *"
+            ],
+            "name": "getUsers",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<Address>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the token identifiers that have been used for payments\\n    *"
+            ],
+            "name": "getpaymentTokenIds",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<EgldOrEsdtTokenIdentifier>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the user subscription plan ids\\n    *"
+            ],
+            "name": "getUserPlanIds",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "variadic<bytes>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "docs": [
+                "\\n     * Stores the user subscription plan info\\n    *"
+            ],
+            "name": "getUserPlanInfo",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "user_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "UserPlan"
+                }
+            ]
+        }
+    ],
+    "events": [],
+    "hasCallback": false,
+    "types": {
+        "Plan": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "status",
+                    "type": "PlanStatus"
+                },
+                {
+                    "name": "validity",
+                    "type": "u64"
+                },
+                {
+                    "name": "allows_refund",
+                    "type": "bool"
+                },
+                {
+                    "name": "refund_period",
+                    "type": "u64"
+                }
+            ]
+        },
+        "PlanStatus": {
+            "type": "enum",
+            "variants": [
+                {
+                    "name": "Enabled",
+                    "discriminant": 0
+                },
+                {
+                    "name": "Disabled",
+                    "discriminant": 1
+                }
+            ]
+        },
+        "UserPlan": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "plan_id",
+                    "type": "bytes"
+                },
+                {
+                    "name": "expires_at",
+                    "type": "u64"
+                },
+                {
+                    "name": "first_subscribed",
+                    "type": "u64"
+                },
+                {
+                    "name": "last_subscribed",
+                    "type": "u64"
+                }
+            ]
+        }
+    }
+}
